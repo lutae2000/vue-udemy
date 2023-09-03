@@ -1,14 +1,29 @@
 <template>
-  Details for coach
-  <router-view></router-view>
-  <router-link to="/coaches/c1/contact">Contact</router-link>
+  <section>
+    <base-card>
+    <h2>Register as a coach now!</h2>
+    <coach-form @save-data="saveData"></coach-form>
+    </base-card>
+  </section>
 </template>
 
 <script>
+import CoachForm from '../../components/coaches/CoachForm.vue'
+import BaseCard from '../../components/ui/BaseCard.vue'
 export default {
+  components: { CoachForm },
+  methods:{
+    saveData(data){
+      this.$store.dispatch('coaches/registerCoach', data);
+      this.$router.push('/coaches');
+    }
+  },
+  computed:{
 
+  }
 }
 </script>
+
 
 <style>
 
