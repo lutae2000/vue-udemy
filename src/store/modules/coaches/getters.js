@@ -11,7 +11,7 @@ export default {
     return coaches.some(coach => coach.id === userId);
   },
   shouldUpdate(state) {
-    debugger;
+    //debugger;
     const lastFetch = state.lastFetch;
     if (!lastFetch) {
       return true;

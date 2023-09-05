@@ -1,4 +1,5 @@
 <template>
+<div>
     <form @submit.prevent="submitForm()">
         <div>
             <label for="email">Your Email</label>
@@ -13,6 +14,7 @@
             <base-button>Send Message</base-button>
         </div>
     </form>
+</div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 form {
   margin: 1rem;
   border: 1px solid #ccc;
