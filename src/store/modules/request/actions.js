@@ -4,10 +4,13 @@ export default {
       userEmail: payload.email,
       userMessage: payload.message,
     };
-    const response = await fetch(`https://vue-http-demo-3fd16-default-rtdb.firebaseio.com/request/${payload.coachId}.json`, {
-      method: 'POST',
-      body: JSON.stringify(newRequest)
-    });
+    const response = await fetch(
+      `https://vue-http-demo-3fd16-default-rtdb.firebaseio.com/request/${payload.coachId}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify(newRequest),
+      }
+    );
 
     const responseData = await response.json();
 
