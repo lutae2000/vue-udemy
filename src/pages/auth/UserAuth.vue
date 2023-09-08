@@ -1,6 +1,13 @@
 <template>
+<base-dialog :show="!!error" title="an error occurred" @close="handleError">
+  <p>{{ error }}</p>
+</base-dialog>
+<base-dialog :show="isLoading" title="Authenticating...." fixed>
+  <p>Authenticating....</p>
+  <base-spinner></base-spinner>
+</base-dialog>
   <base-card>
-    <form>
+    <form @submit.prevent="submitForm">
       <div class="form-control">
         <label for="email">Email</label>
         <input type="email" id="email" v-model.trim="email" />
@@ -19,20 +26,22 @@
 <script>
 
 export default {
-  data(){
-    return {
+  data() {
+    return{
       email: '',
       password: '',
       formIsValid: true,
-      mode: 'login'
-    };
+      mode: 'login',
+      isLoading: false,
+      error: null,
+    }
   },
   computed:{
     submitButtonCaption(){
       if(this.mode === 'login'){
-        return 'login'
+        return 'Login'
       } else {
-        return 'signup'
+        return 'Signup'
       }
     },
     switchModeButtonCaption(){
@@ -45,12 +54,29 @@ export default {
     
   },
   methods: {
-    submitForm(){
+    async submitForm(){
       this.formIsValid = true;
       if(this.email === '' || !this.email.includes('@' || this.password.length < 6)){
         this.formIsValid = false;
-        return
+        return false;
       }
+
+      this.isLoading = true;
+
+      try{
+        if(this.mode === 'login'){
+          
+        } else {
+          await this.$store.dispatch('signup', {
+            email: this.email,
+            password: this.password,
+          });
+        }
+      } catch(err) {
+        this.error = err.message || 'Failed to authenticate, try later';
+      }
+
+      this.isLoading = false;
     },
     switchAuthMode(){
       if(this.mode === 'login'){
@@ -58,6 +84,9 @@ export default {
       } else {
         this.mode = 'login';
       }
+    },
+    handleError(){
+      this.error = null;
     }
   }
 };
