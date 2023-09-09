@@ -9,8 +9,11 @@ export default {
       areas: data.areas
     };
 
+    debugger;
+    const token = context.rootGetters.token;
+
     const response = await fetch(
-      `https://vue-http-demo-3fd16-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+      `https://vue-http-demo-3fd16-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=${token}`,
       {
         method: "PUT",
         body: JSON.stringify(coachData),
@@ -52,7 +55,7 @@ export default {
         hourlyRate: responseData[key].hourlyRate,
         areas: responseData[key].areas,
       };
-      coaches.push(coach)
+      coaches.push(coach);
     }
     context.commit('setCoaches', coaches);
     context.commit('setFetchTimestamp')
